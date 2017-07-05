@@ -13,8 +13,8 @@
     </select>
     
     <select class="form-control" name="year">
-    <?php for($startYear; $startYear <= $currentYear; $startYear++): ?>
-        <option value="<?php echo $startYear; ?>"><?php echo $startYear; ?></option>
+    <?php for($currentYear; $currentYear >= $startYear; $currentYear--): ?>
+        <option value="<?php echo $currentYear; ?>"><?php echo $currentYear; ?></option>
     <?php endfor; ?>
     </select>
 </form>
