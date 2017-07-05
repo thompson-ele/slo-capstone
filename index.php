@@ -1,18 +1,22 @@
-<!doctype html>
-<html>
-<head>
-    <title>Student Learning Outcomes</title>
-</head>
+<?php include('views/header.php');
+    $currentYear = date('Y');
+    $startYear = date('Y', strtotime('-10 year')); 
+ ?>
 
-<body>
-    <h1>TESTING</h1>
-    <?php
-        include('models/database.php');
-        $results = $db->query("SELECT * FROM student");
+<h1>TESTING</h1>
+<form>
+    <select class="form-control" name="season">
+        <option value="Fall">Fall</option>
+        <option value="Spring">Spring</option>
+        <option value="Summer">Summer</option>
+        <option value="Winter">Winter</option>
+    </select>
+    
+    <select class="form-control" name="year">
+    <?php for($startYear; $startYear <= $currentYear; $startYear++): ?>
+        <option value="<?php echo $startYear; ?>"><?php echo $startYear; ?></option>
+    <?php endfor; ?>
+    </select>
+</form>
 
-        foreach($results as $student) {
-            echo '<p>'.$student['student_id'].'</p>';
-        }
-    ?>
-</body>
-</html>
+<?php include('views/footer.php'); ?>
