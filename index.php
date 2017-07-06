@@ -1,42 +1,24 @@
 <?php include('views/header.html');
+    include('models/term.php');
     $currentYear = date('Y');
     $startYear = date('Y', strtotime('-10 year')); 
     $terms = getTerms();
  ?>
 
-<h1>Terms</h1>
-<form>
-    <select class="form-control" name="season">
-        <option value="Fall">Fall</option>
-        <option value="Spring">Spring</option>
-        <option value="Summer">Summer</option>
-        <option value="Winter">Winter</option>
-    </select>
+<div class="container" ng-app="todoListApp">
+    <h1>My TODOs</h1>
+    <div ng-controller="mainCtrl" class="list">
+        <input type="checkbox"/>
+        <label class="editing-label">A sample todo!</label>
+        <input class="editing-label" type="text" />
     
-    <select class="form-control" name="year">
-    <?php for($currentYear; $currentYear >= $startYear; $currentYear--): ?>
-        <option value="<?php echo $currentYear; ?>"><?php echo $currentYear; ?></option>
-    <?php endfor; ?>
-    </select>
-</form>
+        <div class="actions">
+            <a href="" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+            <a href="" class="btn btn-primary" ng-click="helloWorld()"><i class="fa fa-floppy-o"></i> Save</a>
+            <a href="" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+    </div>
+</div>
 
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Term ID</th>
-            <th>Season</th>
-            <th>Year</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php foreach($terms as $term): ?>
-        <tr>
-            <td><?php echo $term['term_id']; ?></td>
-            <td><?php echo $term['term_season']; ?></td>
-            <td><?php echo $term['term_year']; ?></td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
-
+<?php include('views/term.php'); ?>
 <?php include('views/footer.html'); ?>
