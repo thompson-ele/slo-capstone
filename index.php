@@ -5,20 +5,25 @@
     $terms = getTerms();
  ?>
 
-<div class="container" ng-app="todoListApp">
-    <h1>My TODOs</h1>
+<div class="container">
+
     <div ng-controller="mainCtrl" class="list">
-        <input type="checkbox"/>
-        <label class="editing-label">A sample todo!</label>
-        <input class="editing-label" type="text" />
-    
-        <div class="actions">
-            <a href="" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-            <a href="" class="btn btn-primary" ng-click="helloWorld()"><i class="fa fa-floppy-o"></i> Save</a>
-            <a href="" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+        <h1 ng-click="helloWorld()">My TODOs</h1>
+        <div>
+            <input ng-model="todo.completed" type="checkbox"/>
+            <label ng-hide="editing" class="editing-label" ng-click="helloWorld()">
+            {{todo.name}}</label>
+            <input ng-show="editing" ng-model="todo.name" class="editing-label" type="text"/>
+
+            <div class="actions">
+                <a href="" class="btn btn-primary" ng-click="editing = !editing"><i class="fa fa-pencil"></i> Edit</a>
+                <a href="" class="btn btn-primary" ng-click="helloWorld()"><i class="fa fa-floppy-o"></i> Save</a>
+                <a href="" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+            </div>
         </div>
+        {{todos}}
     </div>
-</div>
+</div><!--.container-->
 
 <?php include('views/term.php'); ?>
 <?php include('views/footer.html'); ?>
