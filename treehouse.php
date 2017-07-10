@@ -10,3 +10,12 @@
 </head>
 
 <body ng-app="todoListApp">
+
+<div class="container">
+    <h1>My TODOs</h1>
+    <div ng-app="todoListApp">
+        <todos></todos>
+    </div>
+</div><!--.container-->
+
+<?php include('views/footer.html'); ?>

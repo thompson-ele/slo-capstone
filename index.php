@@ -1,32 +1,51 @@
-<?php include('views/header.html');
-    include('models/term.php');
-    $currentYear = date('Y');
-    $startYear = date('Y', strtotime('-10 year')); 
-    $terms = getTerms();
- ?>
+<!doctype html>
+<html ng-app="sloApp">
+<head>
+    <title>Student Learning Outcomes</title>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/fae7a79c55.css" media="all">
+    <!-- CUSTOM STYLESHEETS -->
+    <link rel="stylesheet" href="css/app.css" type="text/css">
+</head>
 
-<div class="container">
+<body ng-controller="courseCtrl">
 
-    <div ng-controller="mainCtrl" class="list">
-        <h1 ng-click="helloWorld()">My TODOs</h1>
-
-        <!-- ng-class adds the .editing-item or .edited classes if the editing or todo.edited variables are TRUE -->
-        <div class="item" ng-class="{'editing-item': editing, 'edited': todo.edited}" ng-repeat="todo in todos">
-            <input ng-model="todo.completed" type="checkbox"/>
-            <label ng-hide="editing" ng-click="helloWorld()">
-            {{todo.name}}</label>
-            <!-- ng-change sets todo.edited to TRUE if something has changed in this input -->
-            <input ng-change="todo.edited = true" ng-blur="editing = false;" ng-show="editing" ng-model="todo.name" class="editing-label" type="text"/>
-
-            <div class="actions">
-                <a href="" ng-click="editing = !editing" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                <a href="" ng-click="saveTodo(todo)" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</a>
-                <a href="" ng-click="deleteTodo(todo, $index)" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+    <div class="container">
+    
+        <div class="row">
+            <div class="col-sm-2">
+                <ul>
+                    <li><a ui-sref="courses">Courses</a></li>
+                    <li><a href="">Instructors</a></li>
+                    <li><a href="">Sections</a></li>
+                    <li><a href="">Surveys</a></li>
+                </ul>
             </div>
-        </div>
-        {{todos}}
-    </div><!--mainCtrl-->
-</div><!--.container-->
+            <div class="col-sm-10">
+                <ui-view></ui-view>
+            </div>
+        </div><!--.row-->
 
-<?php include('views/term.php'); ?>
-<?php include('views/footer.html'); ?>
+    </div>
+
+
+    <!-- jQuery -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/controllers/course.js"></script>
+    <script src="js/services/course.js"></script>
+
+    <!-- TREEHOUSE FILES-->
+    <script src="js/services/data.js"></script>
+    <script src="js/directives/todos.js"></script>
+</body>
+</html>
