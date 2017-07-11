@@ -13,7 +13,7 @@
 
     <div class="container">
     
-        <div class="row">
+        <!--<div class="row">
             <div class="col-sm-2">
                 <ul>
                     <li><a ui-sref="courses">Courses</a></li>
@@ -23,9 +23,11 @@
                 </ul>
             </div>
             <div class="col-sm-10">
-                <ui-view></ui-view>
+                
             </div>
-        </div><!--.row-->
+        </div>-->
+
+        <ui-view></ui-view>
 
     </div>
 
@@ -42,7 +44,9 @@
     <script src="js/app.js"></script>
     <script src="js/controllers/main.js"></script>
     <script src="js/controllers/course.js"></script>
+    <script src="js/controllers/outcome.js"></script>
     <script src="js/services/course.js"></script>
+    <script src="js/services/outcome.js"></script>
 
     <!-- TREEHOUSE FILES-->
     <script src="js/services/data.js"></script>

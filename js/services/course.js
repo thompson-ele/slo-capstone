@@ -2,6 +2,12 @@
 
 angular.module('sloApp')
     .service('courseService', function($http) {
+        
+        this.active = null;
+        this.activeCourse = function(course) {
+            $scope.active = course;
+        }
+
         this.getCourse = function(course_id) {
             return $http({
                     method: 'post',

@@ -6,7 +6,7 @@ if( isset($_POST['type']) && !empty(isset($_POST['type'])) ){
 	
 	switch ($type) {
 		case "getOutcomes":
-			getOutcomes();
+			getOutcomes($_POST['course_id']);
 			break;
 		case "getOutcome":
             getOutcome($_POST['outcome_id']);
@@ -46,10 +46,13 @@ function getOutcomes($course_id)
         include("database.php");
         
         try {
-            $records = $db->query("SELECT * FROM outcome
-                                   WHERE course_id = ?");
-            // TODO: Fix SQL query to include course_id param
-            $data['records'] = $records->fetchAll();
+            $sql = ("SELECT * FROM outcome
+                     WHERE course_id = ?");
+            
+            $results = $db->prepare($sql);
+            $results->bindValue(1, $course_id, PDO::PARAM_INT);
+            $results->execute();
+            $data['records'] = $results->fetchAll();
             echo json_encode($data);
         } catch(Exception $e) {
             echo "Error!: " . $e->getMessage() . "<br>"   ;
@@ -60,25 +63,22 @@ function getOutcomes($course_id)
 function saveOutcome($dataArray)
     {   include("database.php");
         
-        $course_id      = $dataArray['course_id'];
-        $course_prefix  = $dataArray['course_prefix'];
-        $course_number  = $dataArray['course_number'];
-        $course_name    = $dataArray['course_name'];
+        $outcome_id     = $dataArray['outcome_id'];
+        $outcome_text   = $dataArray['outcome_text'];
+        $position       = $dataArray['position'];
 
         try {
             // TODO: update to save a specific outcome
-            $sql = "UPDATE outcome
-                    SET course_prefix = ?,
-                        course_number = ?,
-                        course_name = ?
-                    WHERE course_id = ?";
+            $sql = "UPDATE  outcome
+                    SET     outcome_text = ?,
+                            position = ?
+                    WHERE outcome_id = ?";
                                    
             
             $results = $db->prepare($sql);
-            $results->bindValue(1, $course_prefix, PDO::PARAM_STR);
-            $results->bindValue(2, $course_number, PDO::PARAM_INT);
-            $results->bindValue(3, $course_name, PDO::PARAM_STR);
-            $results->bindValue(4, $course_id, PDO:: PARAM_INT);
+            $results->bindValue(1, $outcome_text, PDO::PARAM_STR);
+            $results->bindValue(2, $position, PDO::PARAM_INT);
+            $results->bindValue(3, $outcome_id, PDO::PARAM_INT);
             $results->execute();
             
         } catch(Exception $e) {
@@ -94,22 +94,21 @@ function saveOutcome($dataArray)
 function addOutcome($data)
     {   include("database.php");
         
-        // TODO: Get info from the controller
-        $course_prefix  = $data['course_prefix'];
-        $course_number  = $data['course_number'];
-        $course_name    = $data['course_name'];
+        $course_id      = $data['course_id'];
+        $outcome_text   = $data['outcome_text'];
+        $position       = $data['position'];
 
         try {
             // TODO: Update SQL query
-            $sql = "INSERT INTO course
-                    (course_prefix, course_number, course_name)
+            $sql = "INSERT INTO outcome
+                    (course_id, outcome_text, position)
                     VALUES (?, ?, ?)";
                                    
             
             $results = $db->prepare($sql);
-            $results->bindValue(1, $course_prefix, PDO::PARAM_STR);
-            $results->bindValue(2, $course_number, PDO::PARAM_INT);
-            $results->bindValue(3, $course_name, PDO::PARAM_STR);
+            $results->bindValue(1, $course_id, PDO::PARAM_INT);
+            $results->bindValue(2, $outcome_text, PDO::PARAM_STR);
+            $results->bindValue(3, $position, PDO::PARAM_INT);
             $results->execute();
             
         } catch(Exception $e) {

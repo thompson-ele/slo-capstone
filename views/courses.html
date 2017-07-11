@@ -1,5 +1,90 @@
-<div class="container">
-    <h1>Courses</h1>
+
+    <h1>Course Management</h1>
+    
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="input-group custom-search-form">
+                        <input type="text" class="form-control" ng-model="searchKeyword" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div><!--.panel-heading-->
+
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="" ng-click="activeCourse(course);getOutcomes(course)" ng-class="{'active': course == active}"  class="list-group-item" ng-repeat="course in courses | filter: searchKeyword | orderBy: 'course_prefix'">
+                           {{course.course_prefix}} {{course.course_number}} {{course.course_name}}
+                        </a>
+                    </div>
+                </div><!--.panel-body-->
+            </div>
+        </div><!--.col-sm-4-->
+
+        <div class="col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{active.course_name}}</div>
+                <div class="panel-body">
+                    <a href="" class="btn btn-success pull-right" ng-click="addbutton = !addbutton; newOutcome.course_id = active.course_id">+ Add Outcome</a> 
+                    <h3>{{active.course_name}} Course Outcomes</h3>
+
+                    <form class="well" ng-show="addbutton">
+                        <div class="form-group">
+                            <label>Outcome Text</label>
+                            <input type="text" ng-model="newOutcome.outcome_text" placeholder="Outcome Text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Position</label>
+                            <input type="text" ng-model="newOutcome.position" placeholder="Position of Outcome" class="form-control">
+                        </div>
+                        <a href="" ng-click="addOutcome(newOutcome)" class="btn btn-success">Add Course</a>
+                    </form>
+
+                    <div ng-repeat="outcome in outcomes" ng-init="closed = true" class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 ng-click="closed = !closed" class="panel-title">{{outcome.outcome_text}} <span class="caret pull-right"></span></h4>
+                            </div>
+
+                            <div class="panel-collapse" ng-show="!closed">
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Question Text</th>
+                                                <th>Question Type</th>
+                                                <th>Image</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Question 1</td>
+                                                <td>Multiple Choice</td>
+                                                <td>Image</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!--.panel .panel-default-->
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--.row-->
+    
+
+
+
+
+
+
+
     <div ng-show="success" class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Success!</strong> {{msg}}
@@ -51,6 +136,5 @@
         
     </table>
     DEBUGGING<br>
-    <pre>{{testCourse}}</pre>
+    <pre>{{newOutcome}}</pre>
     <pre>{{courses}}</pre>
-</div><!--.container-->
