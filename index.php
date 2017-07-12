@@ -11,21 +11,31 @@
 
 <body ng-controller="courseCtrl">
 
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" aria-expanded="false" data-target="#navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Student Learning Outcomes</a>
+                </div><!--.navbar-header-->
+
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a ui-sref="courses">Courses</a></li>
+                        <li><a ui-sref="sections">Sections</a></li>
+                        <li><a href="">Surveys</a></li>
+                    </ul>
+                </div>
+            </div><!--.container-->
+        </nav>
+    </header>
+
     <div class="container">
-    
-        <!--<div class="row">
-            <div class="col-sm-2">
-                <ul>
-                    <li><a ui-sref="courses">Courses</a></li>
-                    <li><a href="">Instructors</a></li>
-                    <li><a href="">Sections</a></li>
-                    <li><a href="">Surveys</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-10">
-                
-            </div>
-        </div>-->
 
         <ui-view></ui-view>
 
@@ -47,6 +57,7 @@
     <script src="js/controllers/outcome.js"></script>
     <script src="js/services/course.js"></script>
     <script src="js/services/outcome.js"></script>
+    <script src="js/services/question.js"></script>
 
     <!-- TREEHOUSE FILES-->
     <script src="js/services/data.js"></script>

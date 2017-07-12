@@ -2,6 +2,7 @@
 
 angular.module('sloApp')
     .service('outcomeService', function($http) {
+
         this.getOutcome = function(outcome_id) {
             return $http({
                     method: 'post',

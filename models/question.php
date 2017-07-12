@@ -23,7 +23,7 @@ if( isset($_POST['type']) && !empty(isset($_POST['type'])) ){
 function getQuestion($question_id)
     {
         include ("database.php");
-        $sql = "SELECT * FROM question WHERE outcome_id = ?";
+        $sql = "SELECT * FROM question WHERE question_id = ?";
         
         try {
             // Create a prepared statement
