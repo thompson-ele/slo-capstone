@@ -42,5 +42,13 @@ angular.module('sloApp')
                 }).then(function(data) {return data});
         };
 
-        this.deleteQuestions = function(questions) {};
+        this.deleteQuestion = function(question) {
+            return $http({
+                    method: 'post',
+                    url: 'models/question.php',
+                    data: $.param({'type' : 'deleteQuestion',
+                                   'data' : question}),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(data) {return data});
+        };
     });

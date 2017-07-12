@@ -58,9 +58,5 @@
     <script src="js/services/course.js"></script>
     <script src="js/services/outcome.js"></script>
     <script src="js/services/question.js"></script>
-
-    <!-- TREEHOUSE FILES-->
-    <script src="js/services/data.js"></script>
-    <script src="js/directives/todos.js"></script>
 </body>
 </html>

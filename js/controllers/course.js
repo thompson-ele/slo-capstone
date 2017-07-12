@@ -65,10 +65,9 @@ angular.module('sloApp')
 
     $scope.addQuestion = function(newQuestion) {
       questionService.addQuestion(newQuestion).then(function(response) {
-        console.log(response);
+        newQuestion.question_id = response.data.records.question_id;
         // Gets the outcome with same outcome_id
         var matchingOutcome = $filter("filter")($scope.outcomes, {outcome_id: newQuestion.outcome_id})[0];
-        console.log(matchingOutcome);
         matchingOutcome.questions.push(newQuestion);
       }, function(response) {
         console.log('There was a problem adding the question');
@@ -82,5 +81,14 @@ angular.module('sloApp')
       }, function(response) {
         $scope.success = false;
       });
+    }
+
+    $scope.deleteQuestion = function(question) {
+      questionService.deleteQuestion(question).then(function(response) {
+        var outcome = $filter('filter')($scope.outcomes, {outcome_id: question.outcome_id})[0];
+        var index = outcome.questions.indexOf(question);
+        outcome.questions.splice(index, 1);
+      });
+
     }
   });

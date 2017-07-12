@@ -17,6 +17,9 @@ if( isset($_POST['type']) && !empty(isset($_POST['type'])) ){
         case "addQuestion":
             addQuestion($_POST['data']);
             break;
+        case "deleteQuestion":
+            deleteQuestion($_POST['data']);
+            break;
 		default:
 			invalidRequest();
 	}
@@ -108,15 +111,35 @@ function addQuestion($data)
             $results->bindValue(2, $question_type, PDO::PARAM_STR);
             $results->bindValue(3, $outcome_id, PDO::PARAM_INT);
             $results->execute();
+            $question_id = $db->lastInsertId();
             
         } catch(Exception $e) {
             echo "Error!: " . $e->getMessage() . "<br>"   ;
             // $data['status'] = 'ERR';
         }
-        
+        $data['records']['question_id'] = $question_id;
         $data['status'] = 'OK';
         echo json_encode($data);
     }
 
-function deleteQuestion() {}
+function deleteQuestion($data) {
+    include("database.php");
+
+    $question_id    = $data['question_id'];
+
+    try {
+        $sql = "DELETE FROM question
+                WHERE question_id = ?";
+
+        $results = $db->prepare($sql);
+        $results->bindValue(1, $question_id, PDO::PARAM_INT);
+        $results->execute();
+
+    } catch(Exception $e) {
+        echo "Error!: " . $e->getMessage() . "<br>"   ;
+    }
+
+    $data['status'] = 'OK';
+    echo json_encode($data);
+}
 ?>
