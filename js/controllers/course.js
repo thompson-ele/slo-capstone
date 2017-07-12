@@ -1,5 +1,5 @@
 angular.module('sloApp')
-  .controller('courseCtrl', function($scope, courseService, outcomeService, questionService) {
+  .controller('courseCtrl', function($scope, $filter, courseService, outcomeService, questionService) {
     // Stores active course in active variable
     $scope.active = null;
     $scope.activeCourse = function(course) {
@@ -45,10 +45,30 @@ angular.module('sloApp')
       });
     }
 
+    $scope.saveOutcome = function(outcome) {
+      outcomeService.saveOutcome(outcome).then(function(response) {
+        $scope.success = true;
+        $scope.msg = 'Saved the changes to the outcome!'
+      }, function(response) {
+        $scope.success = false;
+      });
+    }
+
     // QUESTIONS
     $scope.getQuestions = function(outcome) {
       questionService.getQuestions(outcome.outcome_id).then(function(response) {
         outcome.questions = response.data.records;
       })
+    }
+
+    $scope.addQuestion = function(newQuestion) {
+      questionService.addQuestion(newQuestion).then(function(response) {
+        // Gets the outcome with same outcome_id
+        var matchingOutcome = $filter("filter")($scope.outcomes, {outcome_id: newQuestion.outcome_id})[0];
+        console.log(matchingOutcome);
+        matchingOutcome.questions.push(newQuestion);
+      }, function(response) {
+        console.log('There was a problem adding the question');
+      });
     }
   });

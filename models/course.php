@@ -47,8 +47,7 @@ function getCourses()
             $data['records'] = $records->fetchAll();
             echo json_encode($data);
         } catch(Exception $e) {
-            echo "Error!: " . $e->getMessage() . "<br>"   ;
-            return false;
+            $data['status'] = 'ERR';
         }
     }
 
@@ -82,6 +81,7 @@ function saveCourse($dataArray)
         
         $data['status'] = 'OK';
         echo json_encode($data);
+        break;
     }
 
 function addCourse($data)

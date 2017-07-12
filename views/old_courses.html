@@ -1,0 +1,53 @@
+    <div ng-show="success" class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Success!</strong> {{msg}}
+    </div>
+    
+    <a href="" ng-click="add = true" class="btn btn-success">+ Add Course</a>
+    
+    <form ng-show="add">
+        <div class="form-group">
+            <label>Course Prefix</label>
+            <input type="text" ng-model="newCourse.course_prefix" placeholder="Ex: COSA">
+        </div>
+        <div class="form-group">
+            <label>Course Number</label>
+            <input type="text" ng-model="newCourse.course_number" placeholder="Ex: 1">
+        </div>
+        <div class="form-group">
+            <label>Course Name</label>
+            <input type="text" ng-model="newCourse.course_name" placeholder="Ex: Computer Information Competency">
+        </div>
+        <a href="" ng-click="addCourse(newCourse)" class="btn btn-success">Add Course</a>
+    </form>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="course in courses">
+                <td><label ng-hide="editing">{{course.course_prefix}} {{course.course_number}}</label>
+                    <input ng-change="course.edited = true" ng-blur="editing = false;" ng-show="editing" ng-model="course.course_prefix" type="text" class="form-control" placeholder="Prefix"/>
+                    <input ng-change="course.edited = true" ng-blur="editing = false;" ng-show="editing" ng-model="course.course_number" type="text" class="form-control" placeholder="Number"/>
+                </td>
+                <td><label ng-hide="editing">
+                    {{course.course_name}}</label>
+                    <input ng-change="course.edited = true" ng-blur="editing = false;" ng-show="editing" ng-model="course.course_name" type="text" class="form-control"/>
+                </td>
+                <td class="text-right">
+                    <a href="" ng-click="editing = !editing" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                    <a href="" ng-click="saveCourse(course)" class="btn btn-success"><i class="fa fa-floppy-o"></i></a>
+                    <a href="" ng-click="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+        
+    </table>
+    DEBUGGING<br>
+    <pre>{{newOutcome}}</pre>
+    <pre>{{courses}}</pre>

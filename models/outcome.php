@@ -72,7 +72,7 @@ function saveOutcome($dataArray)
             $sql = "UPDATE  outcome
                     SET     outcome_text = ?,
                             position = ?
-                    WHERE outcome_id = ?";
+                    WHERE   outcome_id = ?";
                                    
             
             $results = $db->prepare($sql);
@@ -88,6 +88,7 @@ function saveOutcome($dataArray)
         
         $data['status'] = 'OK';
         echo json_encode($data);
+        break;
     }
 
 // Creates a new outcome
@@ -118,6 +119,7 @@ function addOutcome($data)
         
         $data['status'] = 'OK';
         echo json_encode($data);
+        break;
     }
 
 function deleteOutcome() {}

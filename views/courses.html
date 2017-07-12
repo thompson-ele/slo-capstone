@@ -26,11 +26,33 @@
         </div><!--.col-sm-4-->
 
         <div class="col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">{{active.course_name}} Outcomes</div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="btn-group pull-right">
+                        <a href="" class="btn btn-default btn-xs" ng-click="editing = !editing">Edit Course</a>
+                        <a href="" class="btn btn-success btn-xs" ng-click="addbutton = !addbutton; newOutcome.course_id = active.course_id">+ Add Outcome</a>
+                        
+                    </div>
+                    <h4 class="panel-title">{{active.course_prefix}} {{active.course_number}} - {{active.course_name}} Outcomes</h4>
+                </div>
                 <div class="panel-body">
-                    <a href="" class="btn btn-success pull-right" ng-click="addbutton = !addbutton; newOutcome.course_id = active.course_id">+ Add Outcome</a> 
-                    <!--<h3>{{active.course_name}} Course Outcomes</h3>-->
+                    
+                    <div class="well" ng-show="editing">
+                        <div class="form-group">
+                            <label>Course Prefix</label>
+                            <input ng-change="course.edited = true"  ng-model="active.course_prefix" type="text" class="form-control" placeholder="Prefix"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Course #</label>
+                            <input ng-change="course.edited = true" ng-model="active.course_number" type="text" class="form-control" placeholder="Number"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Course Name</label>
+                            <input ng-change="course.edited = true" ng-model="active.course_name" type="text" class="form-control" placeholder="Course Name"/>
+                        </div>
+                        <a href="" ng-click="saveCourse(active); editing = false" class="btn btn-primary">Save Course</a>
+                    </div>
 
                     <form class="well" ng-show="addbutton">
                         <div class="form-group">
@@ -52,37 +74,53 @@
 
                             <div class="panel-collapse" ng-show="!closed">
                                 <div class="panel-body">
+                                    <div class="btn-group pull-right">
+                                        <a href="" ng-click="editoutcome = !editoutcome" class="btn btn-primary btn-sm">Edit Outcome</a>
+                                        <a href="" ng-click="addquestion = !addquestion; newQuestion.outcome_id = outcome.outcome_id" class="btn btn-success btn-sm">
+                                            + Add Question
+                                        </a>
+                                    </div>
+                                    
+                                    <div class="well" ng-show="editoutcome">
+                                        <label>Outcome Text</label>
+                                        <input type="text" ng-model="outcome.outcome_text" class="form-control" placeholder="Outcome Text">
+                                        <a href="" ng-click="saveOutcome(outcome);editoutcome = false" class="btn btn-success">Save Outcome</a>
+                                    </div>
+
+                                    <div class="well" ng-show="addquestion">
+                                        <div class="form-group">
+                                            <label>Question Text</label>
+                                            <input type="text" ng-model="newQuestion.question_text" class="form-control" placeholder="Enter your question here">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Question Type</label>
+                                            <select ng-model="newQuestion.question_type" class="form-control">
+                                                <option value="" disabled selected>Select One</option>
+                                                <option value="multichoice">Multiple Choice</option>
+                                                <option value="truefalse">True/False</option>
+                                                <option value="shortanswer">Short Answer</option>
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="addQuestion(newQuestion);addquestion = false" class="btn btn-success">Add Question</a>
+                                    </div>
+
                                     <table ng-if="outcome.questions.length !== 0" class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Question Text</th>
                                                 <th>Question Type</th>
-                                                <th>Image</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="question in outcome.questions">
                                                 <td>{{question.question_text}}</td>
                                                 <td>{{question.question_type}}</td>
-                                                <td>Image</td>
+                                                <td><a href="" class="btn btn-primary btn-xs">Edit</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="well">
-                                        <h4>Add a New Question</h4>
-                                        <div class="form-group">
-                                            <label>Question Text</label>
-                                            <input type="text" ng-model="newQuestion.question_text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <select ng-model="newQuestion.question_type" class="form-control">
-                                                <option value="multichoice">Multiple Choice</option>
-                                                <option value="truefalse">True/False</option>
-                                                <option value="shortanswer">Short Answer</option>
-                                            </select>
-                                        </div>
-                                        <a href="" class="btn btn-success">Add Question</a>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div><!--.panel .panel-default-->
@@ -93,64 +131,3 @@
         </div>
         
     </div><!--.row-->
-    
-
-
-
-
-
-
-
-    <div ng-show="success" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Success!</strong> {{msg}}
-    </div>
-    
-    <a href="" ng-click="add = true" class="btn btn-success">+ Add Course</a>
-    
-    <form ng-show="add">
-        <div class="form-group">
-            <label>Course Prefix</label>
-            <input type="text" ng-model="newCourse.course_prefix" placeholder="Ex: COSA">
-        </div>
-        <div class="form-group">
-            <label>Course Number</label>
-            <input type="text" ng-model="newCourse.course_number" placeholder="Ex: 1">
-        </div>
-        <div class="form-group">
-            <label>Course Name</label>
-            <input type="text" ng-model="newCourse.course_name" placeholder="Ex: Computer Information Competency">
-        </div>
-        <a href="" ng-click="addCourse(newCourse)" class="btn btn-success">Add Course</a>
-    </form>
-
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Course Code</th>
-                <th>Course Name</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="course in courses">
-                <td><label ng-hide="editing">{{course.course_prefix}} {{course.course_number}}</label>
-                    <input ng-change="course.edited = true" ng-blur="editing = false;" ng-show="editing" ng-model="course.course_prefix" type="text" class="form-control" placeholder="Prefix"/>
-                    <input ng-change="course.edited = true" ng-blur="editing = false;" ng-show="editing" ng-model="course.course_number" type="text" class="form-control" placeholder="Number"/>
-                </td>
-                <td><label ng-hide="editing">
-                    {{course.course_name}}</label>
-                    <input ng-change="course.edited = true" ng-blur="editing = false;" ng-show="editing" ng-model="course.course_name" type="text" class="form-control"/>
-                </td>
-                <td class="text-right">
-                    <a href="" ng-click="editing = !editing" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                    <a href="" ng-click="saveCourse(course)" class="btn btn-success"><i class="fa fa-floppy-o"></i></a>
-                    <a href="" ng-click="" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-        </tbody>
-        
-    </table>
-    DEBUGGING<br>
-    <pre>{{newOutcome}}</pre>
-    <pre>{{courses}}</pre>
