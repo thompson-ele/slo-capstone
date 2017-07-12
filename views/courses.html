@@ -56,7 +56,7 @@
                 <div ng-show="active" class="panel-heading">
                     <div class="btn-group pull-right">
                         <a href="" class="btn btn-default btn-xs" ng-click="editing = !editing">Edit Course</a>
-                        <a href="" class="btn btn-success btn-xs" ng-click="addbutton = !addbutton; newOutcome.course_id = active.course_id">+ Add Outcome</a>
+                        <a href="" class="btn btn-success btn-xs" ng-click="addoutcome = !addoutcome; newOutcome.course_id = active.course_id">+ Add Outcome</a>
                         
                     </div>
                     <h4 class="panel-title">{{active.course_prefix}} {{active.course_number}} - {{active.course_name}} Outcomes</h4>
@@ -78,6 +78,18 @@
                             <input ng-change="course.edited = true" ng-model="active.course_name" type="text" class="form-control" placeholder="Course Name"/>
                         </div>
                         <a href="" ng-click="saveCourse(active); editing = false" class="btn btn-primary">Save Course</a>
+                    </div>
+
+                    <div class="well" ng-show="addoutcome">
+                        <div class="form-group">
+                            <label>Outcome Text</label>
+                            <input type="text" ng-model="newOutcome.outcome_text" placeholder="Outcome Text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Position</label>
+                            <input type="text" ng-model="newOutcome.position" placeholder="Position of Outcome" class="form-control">
+                        </div>
+                        <a href="" ng-click="addOutcome(newOutcome);addoutcome = false;newOutcome = {}" class="btn btn-success">Add Outcome</a>
                     </div>
 
                     <ng-include src="'views/outcomes.html'"></ng-include>
