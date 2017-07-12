@@ -28,7 +28,7 @@
                         <li><a href="#">Dashboard</a></li>
                         <li><a ui-sref="courses">Courses</a></li>
                         <li><a ui-sref="sections">Sections</a></li>
-                        <li><a href="">Surveys</a></li>
+                        <!--<li><a href="">Surveys</a></li>-->
                     </ul>
                 </div>
             </div><!--.container-->

@@ -13,8 +13,10 @@ if( isset($_POST['type']) && !empty(isset($_POST['type'])) ){
 		    break;
         case "saveOutcome":
             saveOutcome($_POST['data']);
+            break;
         case "addOutcome":
             addOutcome($_POST['data']);
+            break;
 		default:
 			invalidRequest();
 	}
@@ -88,7 +90,6 @@ function saveOutcome($dataArray)
         
         $data['status'] = 'OK';
         echo json_encode($data);
-        break;
     }
 
 // Creates a new outcome
@@ -111,15 +112,16 @@ function addOutcome($data)
             $results->bindValue(2, $outcome_text, PDO::PARAM_STR);
             $results->bindValue(3, $position, PDO::PARAM_INT);
             $results->execute();
+            $outcome_id = $db->lastInsertId();
             
         } catch(Exception $e) {
             echo "Error!: " . $e->getMessage() . "<br>"   ;
             $data['status'] = 'ERR';
         }
         
+        $data['records']['outcome_id'] = $outcome_id;
         $data['status'] = 'OK';
         echo json_encode($data);
-        break;
     }
 
 function deleteOutcome() {}

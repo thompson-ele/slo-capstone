@@ -10,6 +10,7 @@ angular.module('sloApp')
         courseService.addCourse(newCourse).then(function(response) {
           $scope.success = true;
           $scope.msg = 'Successfully added the course!';
+          newCourse.course_id = response.data.records.course_id;
           $scope.courses.unshift(newCourse);
         }, function(response) {
           $scope.success = false;
@@ -33,6 +34,7 @@ angular.module('sloApp')
     // OUTCOMES
     $scope.addOutcome = function(newOutcome) {
       outcomeService.addOutcome(newOutcome).then(function(response) {
+        newOutcome.outcome_id = response.data.records.outcome_id;
         $scope.outcomes.push(newOutcome);
       }, function(response) {
         console.log('There was a problem adding the outcome');
@@ -63,12 +65,22 @@ angular.module('sloApp')
 
     $scope.addQuestion = function(newQuestion) {
       questionService.addQuestion(newQuestion).then(function(response) {
+        console.log(response);
         // Gets the outcome with same outcome_id
         var matchingOutcome = $filter("filter")($scope.outcomes, {outcome_id: newQuestion.outcome_id})[0];
         console.log(matchingOutcome);
         matchingOutcome.questions.push(newQuestion);
       }, function(response) {
         console.log('There was a problem adding the question');
+      });
+    }
+
+    $scope.saveQuestion = function(question) {
+      questionService.saveQuestion(question).then(function(response) {
+        $scope.success = true;
+        $scope.msg = 'Saved the changes to the question!'
+      }, function(response) {
+        $scope.success = false;
       });
     }
   });

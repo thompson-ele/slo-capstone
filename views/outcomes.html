@@ -1,0 +1,43 @@
+<form class="well" ng-show="addbutton">
+    <div class="form-group">
+        <label>Outcome Text</label>
+        <input type="text" ng-model="newOutcome.outcome_text" placeholder="Outcome Text" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Position</label>
+        <input type="text" ng-model="newOutcome.position" placeholder="Position of Outcome" class="form-control">
+    </div>
+    <a href="" ng-click="addOutcome(newOutcome); addbutton = false; newOutcome = {}" class="btn btn-success">Add Outcome</a>
+</form>
+
+<div ng-repeat="outcome in outcomes" ng-init="closed = true;getQuestions(outcome)" class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="badge pull-right">{{outcome.questions.length}}</span>
+            <h4 ng-click="closed = !closed;activeOutcome(outcome)" class="panel-title">{{outcome.outcome_text}}</h4>
+        </div>
+
+        <div class="panel-collapse" ng-hide="closed">
+            <div class="panel-body">
+                <div class="btn-group pull-right">
+                    <a href="" ng-click="editoutcome = !editoutcome" class="btn btn-primary btn-xs">Edit Outcome</a>
+                    <a href="" ng-click="addquestion = !addquestion;" class="btn btn-success btn-xs">
+                        + Add Question
+                    </a>
+                </div>
+                
+                <div class="well" ng-show="editoutcome">
+                    <div class="form-group">
+                        <label>Outcome Text</label>
+                        <input type="text" ng-model="outcome.outcome_text" class="form-control" placeholder="Outcome Text">
+                    </div>
+                    <a href="" ng-click="saveOutcome(outcome);editoutcome = false" class="btn btn-success">Save Outcome</a>
+                </div>
+
+                <ng-include src="'views/questions.html'"></ng-include>
+                
+            </div>
+        </div>
+    </div><!--.panel .panel-default-->
+    
+</div>

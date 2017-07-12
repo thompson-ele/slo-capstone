@@ -1,7 +1,5 @@
 'use strict';
 
-// TODO: Create a main controller? Do we need since config is in app.js?
-
 
 
 

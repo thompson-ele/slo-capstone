@@ -13,8 +13,10 @@ if( isset($_POST['type']) && !empty(isset($_POST['type'])) ){
 		    break;
         case "saveQuestion":
             saveQuestion($_POST['data']);
+            break;
         case "addQuestion":
             addQuestion($_POST['data']);
+            break;
 		default:
 			invalidRequest();
 	}
@@ -63,22 +65,19 @@ function saveQuestion($data)
         
         $question_id    = $data['question_id'];
         $question_text  = $data['question_text'];
-        $question_image = $data['question_image'];
         $question_type  = $data['question_type'];
 
         try {
             $sql = "UPDATE  question
                     SET     question_text = ?,
-                            question_image = ?,
                             question_type = ?
                     WHERE   question_id = ?";
                                    
             
             $results = $db->prepare($sql);
             $results->bindValue(1, $question_text, PDO::PARAM_STR);
-            $results->bindValue(2, $question_image, PDO::PARAM_STR);
-            $results->bindValue(3, $question_type, PDO::PARAM_STR);
-            $results->bindValue(4, $question_id, PDO:: PARAM_INT);
+            $results->bindValue(2, $question_type, PDO::PARAM_STR);
+            $results->bindValue(3, $question_id, PDO:: PARAM_INT);
             $results->execute();
             
         } catch(Exception $e) {
@@ -88,7 +87,6 @@ function saveQuestion($data)
         
         $data['status'] = 'OK';
         echo json_encode($data);
-        break;
     }
 
 function addQuestion($data)
@@ -96,31 +94,28 @@ function addQuestion($data)
         
         
         $question_text  = $data['question_text'];
-        $question_image = $data['question_image'];
         $question_type  = $data['question_type'];
         $outcome_id     = $data['outcome_id'];
 
         try {
             $sql = "INSERT INTO question
-                    (question_text, question_image, question_type, outcome_id)
-                    VALUES (?, ?, ?, ?)";
+                    (question_text, question_type, outcome_id)
+                    VALUES (?, ?, ?)";
                                    
             
             $results = $db->prepare($sql);
             $results->bindValue(1, $question_text, PDO::PARAM_STR);
-            $results->bindValue(2, $question_image, PDO::PARAM_STR);
-            $results->bindValue(3, $question_type, PDO::PARAM_STR);
-            $results->bindValue(4, $outcome_id, PDO::PARAM_INT);
+            $results->bindValue(2, $question_type, PDO::PARAM_STR);
+            $results->bindValue(3, $outcome_id, PDO::PARAM_INT);
             $results->execute();
             
         } catch(Exception $e) {
             echo "Error!: " . $e->getMessage() . "<br>"   ;
-            $data['status'] = 'ERR';
+            // $data['status'] = 'ERR';
         }
         
         $data['status'] = 'OK';
         echo json_encode($data);
-        break;
     }
 
 function deleteQuestion() {}

@@ -12,8 +12,10 @@ if( isset($_POST['type']) && !empty(isset($_POST['type'])) ){
 		    break;
         case "saveCourse":
             saveCourse($_POST['data']);
+            break;
         case "addCourse":
             addCourse($_POST['data']);
+            break;
 		default:
 			invalidRequest();
 	}
@@ -102,12 +104,13 @@ function addCourse($data)
             $results->bindValue(2, $course_number, PDO::PARAM_INT);
             $results->bindValue(3, $course_name, PDO::PARAM_STR);
             $results->execute();
+            $course_id = $db->lastInsertId();
             
         } catch(Exception $e) {
             echo "Error!: " . $e->getMessage() . "<br>"   ;
             $data['status'] = 'ERR';
         }
-        
+        $data['records']['course_id'] = $course_id;
         $data['status'] = 'OK';
         echo json_encode($data);
     }

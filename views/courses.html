@@ -5,7 +5,7 @@
         <div class="col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="input-group custom-search-form">
+                    <div class="input-group">
                         <input type="text" class="form-control" ng-model="searchKeyword" placeholder="Search...">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button">
@@ -13,11 +13,34 @@
                             </button>
                         </span>
                     </div>
+
+                    <a href="" ng-click="addcourse = !addcourse" class="btn btn-success btn-block margin-top">Add a New Course</a>
+
+                    <div ng-show="addcourse" class="well">
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <input ng-model="newCourse.course_prefix" type="text" class="form-control" placeholder="Course Prefix">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <input ng-model="newCourse.course_number" type="text" class="form-control" placeholder="Course #">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="newCourse.course_name" placeholder="Add a New Course">
+                            <span class="input-group-btn">
+                                <button ng-click="addCourse(newCourse);newCourse={}" class="btn btn-success" type="button">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+
                 </div><!--.panel-heading-->
 
                 <div class="panel-body">
                     <div class="list-group">
-                        <a href="" ng-click="activeCourse(course);getOutcomes(course)" ng-class="{'active': course == active}"  class="list-group-item" ng-repeat="course in courses | filter: searchKeyword | orderBy: 'course_prefix'">
+                        <a href="" ng-click="activeCourse(course);getOutcomes(course)" ng-class="{'active': course == active}"
+                           class="list-group-item" ng-repeat="course in courses | filter: searchKeyword | orderBy: 'course_prefix'">
                            {{course.course_prefix}} {{course.course_number}} {{course.course_name}}
                         </a>
                     </div>
@@ -27,7 +50,10 @@
 
         <div class="col-sm-8">
             <div class="panel panel-primary">
-                <div class="panel-heading">
+                <div ng-hide="active" class="panel-heading">
+                    Please select a Course
+                </div>
+                <div ng-show="active" class="panel-heading">
                     <div class="btn-group pull-right">
                         <a href="" class="btn btn-default btn-xs" ng-click="editing = !editing">Edit Course</a>
                         <a href="" class="btn btn-success btn-xs" ng-click="addbutton = !addbutton; newOutcome.course_id = active.course_id">+ Add Outcome</a>
@@ -54,78 +80,7 @@
                         <a href="" ng-click="saveCourse(active); editing = false" class="btn btn-primary">Save Course</a>
                     </div>
 
-                    <form class="well" ng-show="addbutton">
-                        <div class="form-group">
-                            <label>Outcome Text</label>
-                            <input type="text" ng-model="newOutcome.outcome_text" placeholder="Outcome Text" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Position</label>
-                            <input type="text" ng-model="newOutcome.position" placeholder="Position of Outcome" class="form-control">
-                        </div>
-                        <a href="" ng-click="addOutcome(newOutcome)" class="btn btn-success">Add Course</a>
-                    </form>
-
-                    <div ng-repeat="outcome in outcomes" ng-init="closed = true;getQuestions(outcome)" class="panel-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 ng-click="closed = !closed;activeOutcome(outcome)" class="panel-title">{{outcome.outcome_text}} <span class="badge pull-right">{{outcome.questions.length}}</span></h4>
-                            </div>
-
-                            <div class="panel-collapse" ng-show="!closed">
-                                <div class="panel-body">
-                                    <div class="btn-group pull-right">
-                                        <a href="" ng-click="editoutcome = !editoutcome" class="btn btn-primary btn-sm">Edit Outcome</a>
-                                        <a href="" ng-click="addquestion = !addquestion; newQuestion.outcome_id = outcome.outcome_id" class="btn btn-success btn-sm">
-                                            + Add Question
-                                        </a>
-                                    </div>
-                                    
-                                    <div class="well" ng-show="editoutcome">
-                                        <label>Outcome Text</label>
-                                        <input type="text" ng-model="outcome.outcome_text" class="form-control" placeholder="Outcome Text">
-                                        <a href="" ng-click="saveOutcome(outcome);editoutcome = false" class="btn btn-success">Save Outcome</a>
-                                    </div>
-
-                                    <div class="well" ng-show="addquestion">
-                                        <div class="form-group">
-                                            <label>Question Text</label>
-                                            <input type="text" ng-model="newQuestion.question_text" class="form-control" placeholder="Enter your question here">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Question Type</label>
-                                            <select ng-model="newQuestion.question_type" class="form-control">
-                                                <option value="" disabled selected>Select One</option>
-                                                <option value="multichoice">Multiple Choice</option>
-                                                <option value="truefalse">True/False</option>
-                                                <option value="shortanswer">Short Answer</option>
-                                            </select>
-                                        </div>
-                                        <a href="" ng-click="addQuestion(newQuestion);addquestion = false" class="btn btn-success">Add Question</a>
-                                    </div>
-
-                                    <table ng-if="outcome.questions.length !== 0" class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Question Text</th>
-                                                <th>Question Type</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="question in outcome.questions">
-                                                <td>{{question.question_text}}</td>
-                                                <td>{{question.question_type}}</td>
-                                                <td><a href="" class="btn btn-primary btn-xs">Edit</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    
-                                </div>
-                            </div>
-                        </div><!--.panel .panel-default-->
-                        
-                    </div>
+                    <ng-include src="'views/outcomes.html'"></ng-include>
                 </div>
             </div>
         </div>
